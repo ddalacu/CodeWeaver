@@ -1,7 +1,7 @@
 {
   "name": "com.ddalacu.code-weaver",
   "displayName": "CodeWeaver",
-  "version": "0.0.2",
+  "version": "0.0.1-preview",
   "unity": "2019.1",
   "description": "Code weaving library for unity",
   "keywords": [
