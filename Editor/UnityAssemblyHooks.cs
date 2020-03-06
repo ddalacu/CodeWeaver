@@ -56,7 +56,9 @@ public static class UnityAssemblyHooks
 
             try
             {
-                if (CodeWeaver.WeaveDllStream(stream))
+                var pdbPath = Path.ChangeExtension(Path.GetFullPath(stream.Name), ".pdb");
+
+                if (CodeWeaver.WeaveDllStream(stream, File.Exists(pdbPath)))
                 {
                     watch.Stop();
                     Debug.Log($"Processed {dllPath} in {watch.Elapsed.TotalMilliseconds} milliseconds.");

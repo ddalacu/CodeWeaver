@@ -5,19 +5,20 @@ using Mono.Cecil;
 
 public static class CodeWeaver
 {
-    public static readonly ReaderParameters ReaderParams = new ReaderParameters
-    {
-        ReadSymbols = true,
-        AssemblyResolver = new WeaverAssemblyResolver(),
-    };
+    public static WeaverAssemblyResolver Resolver = new WeaverAssemblyResolver();
 
     public static List<IWeaverProcessor> WeaverProcessors = new List<IWeaverProcessor>();
 
     public static void AddProcessor(IWeaverProcessor processor) => WeaverProcessors.Add(processor);
 
-    public static bool WeaveDllStream(Stream stream)
+    public static bool WeaveDllStream(FileStream stream, bool havePdb)
     {
-        var assemblyDefinition = AssemblyDefinition.ReadAssembly(stream, ReaderParams);
+        var assemblyDefinition = AssemblyDefinition.ReadAssembly(stream, new ReaderParameters
+        {
+            ReadSymbols = havePdb,
+            AssemblyResolver = Resolver,
+            ThrowIfSymbolsAreNotMatching = false
+        });
 
         var changed = false;
         foreach (var weaverProcessor in WeaverProcessors)
@@ -27,7 +28,7 @@ public static class CodeWeaver
         {
             assemblyDefinition.Write(stream, new WriterParameters
             {
-                WriteSymbols = true
+                WriteSymbols = havePdb
             });
         }
 
