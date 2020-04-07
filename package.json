@@ -12,7 +12,6 @@
     "email": "validiac@gmail.com"
   },
   "dependencies": {
-    "nuget.mono-cecil": "0.1.6-preview",
-	"org.nuget.system.runtime.compilerservices.unsafe": "4.7.0"
+    "nuget.mono-cecil": "0.1.6-preview"
   }
 }
