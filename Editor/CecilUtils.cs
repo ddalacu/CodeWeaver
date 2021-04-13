@@ -74,6 +74,9 @@ public static class CecilUtils
     {
         foreach (var assemblyDefinitionModule in assemblyDefinition.Modules)
         {
+            if (assemblyFullNames.Contains(assemblyDefinitionModule.Assembly.FullName))
+                return true;
+
             foreach (var assemblyNameReference in assemblyDefinitionModule.AssemblyReferences)
                 if (assemblyFullNames.Contains(assemblyNameReference.FullName))
                     return true;
